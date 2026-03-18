@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: bronze_layer
+    database: REDBULL_DATA
+    schema: BRONZE
+    tables:
+      - name: MATCHING_RAW
+        description: "Raw matching data blob from TSV."
+      - name: OUTLET_RAW
+        description: "Raw outlet metadata blob from TSV."
+      - name: PORTFOLIO_RAW
+        description: "Raw portfolio mapping blob from TSV."

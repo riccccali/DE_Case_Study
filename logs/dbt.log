@@ -1,0 +1,113 @@
+[0m11:09:27.151621 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001FEBFD11400>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001FEC1E83ED0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001FEC1E839D0>]}
+
+
+============================== 11:09:27.157311 | b37f0c61-b3bc-484b-9559-aaff9c5ea280 ==============================
+[0m11:09:27.157311 [info ] [MainThread]: Running with dbt=1.11.7
+[0m11:09:27.158128 [debug] [MainThread]: running dbt with arguments {'static_parser': 'True', 'no_print': 'None', 'version_check': 'True', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'target_path': 'None', 'printer_width': '80', 'write_json': 'True', 'introspect': 'True', 'log_cache_events': 'False', 'empty': 'None', 'cache_selected_only': 'False', 'fail_fast': 'False', 'debug': 'False', 'log_format': 'default', 'profiles_dir': 'C:\\Users\\ricca\\.dbt', 'send_anonymous_usage_stats': 'True', 'quiet': 'False', 'warn_error': 'None', 'partial_parse': 'True', 'use_colors': 'True', 'indirect_selection': 'eager', 'invocation_command': 'dbt init redbull_pipeline', 'use_experimental_parser': 'False', 'log_path': 'logs'}
+[0m11:09:27.181780 [info ] [MainThread]: Creating dbt configuration folder at C:\Users\ricca\.dbt
+[0m11:09:27.184294 [debug] [MainThread]: Starter project path: c:\Users\ricca\CodeRepos\Redbull\.venv\Lib\site-packages\dbt\include\starter_project
+[0m11:09:27.207337 [info ] [MainThread]: 
+Your new dbt project "redbull_pipeline" was created!
+
+For more information on how to configure the profiles.yml file,
+please consult the dbt documentation here:
+
+  https://docs.getdbt.com/docs/configure-your-profile
+
+One more thing:
+
+Need help? Don't hesitate to reach out to us via GitHub issues or on Slack:
+
+  https://community.getdbt.com/
+
+Happy modeling!
+
+[0m11:09:27.208328 [info ] [MainThread]: Setting up your profile.
+[0m11:09:35.856250 [debug] [MainThread]: Snowflake adapter: Setting snowflake.connector to ERROR (file logging only)
+[0m11:09:35.856742 [debug] [MainThread]: Snowflake adapter: Setting botocore to ERROR (file logging only)
+[0m11:09:35.857104 [debug] [MainThread]: Snowflake adapter: Setting boto3 to ERROR (file logging only)
+[0m11:11:56.587538 [info ] [MainThread]: Profile redbull_pipeline written to C:\Users\ricca\.dbt\profiles.yml using target's profile_template.yml and your supplied values. Run 'dbt debug' to validate the connection.
+[0m11:11:56.589039 [debug] [MainThread]: Command `dbt init` succeeded at 11:11:56.588899 after 149.55 seconds
+[0m11:11:56.589444 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001FEC3114640>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001FEC2722210>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001FEC2FF39B0>]}
+[0m11:11:56.589863 [debug] [MainThread]: Flushing usage events
+[0m11:11:57.273723 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m11:12:25.196340 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001EC008F0EC0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001EC02A17ED0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001EC02A179D0>]}
+
+
+============================== 11:12:25.200926 | bcf8f4b8-4c96-4fbe-b5b5-bb2d2acb527e ==============================
+[0m11:12:25.200926 [info ] [MainThread]: Running with dbt=1.11.7
+[0m11:12:25.201663 [debug] [MainThread]: running dbt with arguments {'version_check': 'True', 'no_print': 'None', 'static_parser': 'True', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'target_path': 'None', 'printer_width': '80', 'write_json': 'True', 'introspect': 'True', 'log_cache_events': 'False', 'empty': 'None', 'cache_selected_only': 'False', 'fail_fast': 'False', 'debug': 'False', 'log_format': 'default', 'profiles_dir': 'C:\\Users\\ricca\\.dbt', 'send_anonymous_usage_stats': 'True', 'quiet': 'False', 'warn_error': 'None', 'partial_parse': 'True', 'indirect_selection': 'eager', 'invocation_command': 'dbt debug', 'use_colors': 'True', 'use_experimental_parser': 'False', 'log_path': 'logs'}
+[0m11:12:25.224602 [info ] [MainThread]: dbt version: 1.11.7
+[0m11:12:25.225180 [info ] [MainThread]: python version: 3.13.12
+[0m11:12:25.225656 [info ] [MainThread]: python path: c:\Users\ricca\CodeRepos\Redbull\.venv\Scripts\python.exe
+[0m11:12:25.226095 [info ] [MainThread]: os info: Windows-10-10.0.19045-SP0
+[0m11:12:25.707385 [debug] [MainThread]: Snowflake adapter: Setting snowflake.connector to ERROR (file logging only)
+[0m11:12:25.707875 [debug] [MainThread]: Snowflake adapter: Setting botocore to ERROR (file logging only)
+[0m11:12:25.708245 [debug] [MainThread]: Snowflake adapter: Setting boto3 to ERROR (file logging only)
+[0m11:12:25.781487 [info ] [MainThread]: Using profiles dir at C:\Users\ricca\.dbt
+[0m11:12:25.782044 [info ] [MainThread]: Using profiles.yml file at C:\Users\ricca\.dbt\profiles.yml
+[0m11:12:25.782474 [info ] [MainThread]: Using dbt_project.yml file at C:\Users\ricca\CodeRepos\Redbull\dbt_project.yml
+[0m11:12:25.783557 [info ] [MainThread]: adapter type: snowflake
+[0m11:12:25.783997 [info ] [MainThread]: adapter version: 1.11.3
+[0m11:12:25.784473 [info ] [MainThread]: Configuration:
+[0m11:12:25.784899 [info ] [MainThread]:   profiles.yml file [[32mOK found and valid[0m]
+[0m11:12:25.785336 [info ] [MainThread]:   dbt_project.yml file [[31mERROR not found[0m]
+[0m11:12:25.785768 [info ] [MainThread]: Required dependencies:
+[0m11:12:25.786204 [debug] [MainThread]: Executing "git --help"
+[0m11:12:25.816081 [debug] [MainThread]: STDOUT: "b"usage: git [-v | --version] [-h | --help] [-C <path>] [-c <name>=<value>]\n           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]\n           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--no-lazy-fetch]\n           [--no-optional-locks] [--no-advice] [--bare] [--git-dir=<path>]\n           [--work-tree=<path>] [--namespace=<name>] [--config-env=<name>=<envvar>]\n           <command> [<args>]\n\nThese are common Git commands used in various situations:\n\nstart a working area (see also: git help tutorial)\n   clone      Clone a repository into a new directory\n   init       Create an empty Git repository or reinitialize an existing one\n\nwork on the current change (see also: git help everyday)\n   add        Add file contents to the index\n   mv         Move or rename a file, a directory, or a symlink\n   restore    Restore working tree files\n   rm         Remove files from the working tree and from the index\n\nexamine the history and state (see also: git help revisions)\n   bisect     Use binary search to find the commit that introduced a bug\n   diff       Show changes between commits, commit and working tree, etc\n   grep       Print lines matching a pattern\n   log        Show commit logs\n   show       Show various types of objects\n   status     Show the working tree status\n\ngrow, mark and tweak your common history\n   backfill   Download missing objects in a partial clone\n   branch     List, create, or delete branches\n   commit     Record changes to the repository\n   merge      Join two or more development histories together\n   rebase     Reapply commits on top of another base tip\n   reset      Set `HEAD` or the index to a known state\n   switch     Switch branches\n   tag        Create, list, delete or verify tags\n\ncollaborate (see also: git help workflows)\n   fetch      Download objects and refs from another repository\n   pull       Fetch from and integrate with another repository or a local branch\n   push       Update remote refs along with associated objects\n\n'git help -a' and 'git help -g' list available subcommands and some\nconcept guides. See 'git help <command>' or 'git help <concept>'\nto read about a specific subcommand or concept.\nSee 'git help git' for an overview of the system.\n""
+[0m11:12:25.816608 [debug] [MainThread]: STDERR: "b''"
+[0m11:12:25.817012 [info ] [MainThread]:  - git [[32mOK found[0m]
+
+[0m11:12:25.817553 [info ] [MainThread]: Connection:
+[0m11:12:25.818003 [info ] [MainThread]:   account: teyxhbc-leb40282
+[0m11:12:25.818419 [info ] [MainThread]:   user: riccali
+[0m11:12:25.818801 [info ] [MainThread]:   database: REDBULL_DATA
+[0m11:12:25.819179 [info ] [MainThread]:   warehouse: COMPUTE_WH
+[0m11:12:25.819557 [info ] [MainThread]:   role: ACCOUNTADMIN
+[0m11:12:25.819931 [info ] [MainThread]:   schema: SILVER
+[0m11:12:25.820301 [info ] [MainThread]:   authenticator: None
+[0m11:12:25.820673 [info ] [MainThread]:   oauth_client_id: None
+[0m11:12:25.821044 [info ] [MainThread]:   query_tag: None
+[0m11:12:25.821419 [info ] [MainThread]:   client_session_keep_alive: False
+[0m11:12:25.821818 [info ] [MainThread]:   host: None
+[0m11:12:25.822208 [info ] [MainThread]:   port: None
+[0m11:12:25.822594 [info ] [MainThread]:   proxy_host: None
+[0m11:12:25.822970 [info ] [MainThread]:   proxy_port: None
+[0m11:12:25.823344 [info ] [MainThread]:   protocol: None
+[0m11:12:25.823720 [info ] [MainThread]:   connect_retries: 1
+[0m11:12:25.824105 [info ] [MainThread]:   connect_timeout: None
+[0m11:12:25.824550 [info ] [MainThread]:   retry_on_database_errors: False
+[0m11:12:25.825009 [info ] [MainThread]:   retry_all: False
+[0m11:12:25.825411 [info ] [MainThread]:   insecure_mode: False
+[0m11:12:25.825788 [info ] [MainThread]:   reuse_connections: True
+[0m11:12:25.826159 [info ] [MainThread]:   s3_stage_vpce_dns_name: None
+[0m11:12:25.826535 [info ] [MainThread]:   platform_detection_timeout_seconds: 0.0
+[0m11:12:25.827149 [info ] [MainThread]: Registered adapter: snowflake=1.11.3
+[0m11:12:26.169473 [debug] [MainThread]: Acquiring new snowflake connection 'debug'
+[0m11:12:28.099315 [debug] [MainThread]: Using snowflake connection "debug"
+[0m11:12:28.099718 [debug] [MainThread]: On debug: select 1 as id
+[0m11:12:28.100025 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m11:12:28.774384 [debug] [MainThread]: Snowflake adapter: Error running SQL: select 1 as id
+[0m11:12:28.774808 [debug] [MainThread]: Snowflake adapter: Rolling back transaction.
+[0m11:12:28.775173 [info ] [MainThread]:   Connection test: [[31mERROR[0m]
+
+[0m11:12:28.775821 [info ] [MainThread]: [31m2 checks failed:[0m
+[0m11:12:28.781749 [info ] [MainThread]: Project loading failed for the following reason:
+ project path <C:\Users\ricca\CodeRepos\Redbull\dbt_project.yml> not found
+
+[0m11:12:28.782412 [info ] [MainThread]: dbt was unable to connect to the specified database.
+The database returned the following error:
+
+  >Database Error
+  250001 (08001): Failed to connect to DB: teyxhbc-leb40282.snowflakecomputing.com:443. Incorrect username or password was specified.
+
+Check your database credentials and try again. For more information, visit:
+https://docs.getdbt.com/docs/configure-your-profile
+
+
+[0m11:12:28.783806 [debug] [MainThread]: Command `dbt debug` failed at 11:12:28.783667 after 3.71 seconds
+[0m11:12:28.784158 [debug] [MainThread]: Connection 'debug' was left open.
+[0m11:12:28.784482 [debug] [MainThread]: On debug: No close available on handle
+[0m11:12:28.784837 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001EC040D1350>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001EC03D8EF90>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001EC03D406B0>]}
+[0m11:12:28.785267 [debug] [MainThread]: Flushing usage events
+[0m11:12:29.465666 [debug] [MainThread]: An error was encountered while trying to flush usage events
