@@ -1,0 +1,57 @@
+name: dbt CI
+
+on:
+  pull_request:
+    paths:
+      - 'redbull_pipeline/**'
+      - '.github/workflows/dbt-ci.yml'
+  push:
+    branches:
+      - main
+    paths:
+      - 'redbull_pipeline/**'
+      - '.github/workflows/dbt-ci.yml'
+  workflow_dispatch:
+
+jobs:
+  build-silver:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: redbull_pipeline
+    env:
+      SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
+      SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
+      SNOWFLAKE_PASSWORD: ${{ secrets.SNOWFLAKE_PASSWORD }}
+      SNOWFLAKE_ROLE: ${{ secrets.SNOWFLAKE_ROLE }}
+      SNOWFLAKE_WAREHOUSE: ${{ secrets.SNOWFLAKE_WAREHOUSE }}
+      SNOWFLAKE_DATABASE: ${{ secrets.SNOWFLAKE_DATABASE }}
+      SNOWFLAKE_SCHEMA: ${{ secrets.SNOWFLAKE_SCHEMA }}
+      DBT_PROFILES_DIR: ${{ github.workspace }}/redbull_pipeline
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dbt
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements-dbt.txt
+
+      - name: Write dbt profile
+        run: |
+          cp profiles.yml.example profiles.yml
+
+      - name: Install dbt packages
+        run: dbt deps
+
+      - name: Validate dbt connection
+        run: dbt debug
+
+      - name: Build and test silver models
+        run: dbt build --select silver

@@ -11,3 +11,9 @@ sources:
         description: "Raw outlet metadata blob from TSV."
       - name: PORTFOLIO_RAW
         description: "Raw portfolio mapping blob from TSV."
+      - name: MATCHING_PARSED
+        description: "Quote-aware parsed matching rows loaded from TSV into bronze columns."
+      - name: OUTLET_PARSED
+        description: "Quote-aware parsed outlet rows loaded from TSV into bronze columns."
+      - name: PORTFOLIO_PARSED
+        description: "Quote-aware parsed portfolio rows loaded from TSV into bronze columns."

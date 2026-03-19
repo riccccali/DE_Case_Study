@@ -1,66 +1,77 @@
 {{ config(materialized='view') }}
 
-WITH extraction AS (
+WITH parsed_source AS (
     SELECT
         UPPER(TRIM(MARKET)) AS MARKET,
         SOURCE_FILE,
-        -- Initial extraction: pulling strings, trimming quotes, and nullifying empty ""
-        NULLIF(TRIM(SPLIT_PART(RAW_DATA, '\t', 1), '"'), '') AS raw_id_outlet,
-        NULLIF(TRIM(SPLIT_PART(RAW_DATA, '\t', 2), '"'), '') AS raw_id_platform,
-        NULLIF(TRIM(SPLIT_PART(RAW_DATA, '\t', 3), '"'), '') AS raw_platform_name,
-        NULLIF(TRIM(SPLIT_PART(RAW_DATA, '\t', 4), '"'), '') AS raw_id_ext_link,
-        NULLIF(TRIM(SPLIT_PART(RAW_DATA, '\t', 5), '"'), '') AS raw_place_id,
-        NULLIF(TRIM(SPLIT_PART(RAW_DATA, '\t', 6), '"'), '') AS raw_similarity_score_name,
-        NULLIF(TRIM(SPLIT_PART(RAW_DATA, '\t', 7), '"'), '') AS raw_similarity_score_address,
-        NULLIF(TRIM(SPLIT_PART(RAW_DATA, '\t', 8), '"'), '') AS raw_merged_chain_name,
-        NULLIF(TRIM(SPLIT_PART(RAW_DATA, '\t', 9), '"'), '') AS raw_is_chain,
-        NULLIF(TRIM(SPLIT_PART(RAW_DATA, '\t', 10), '"'), '') AS raw_num_restaurants,
-        NULLIF(TRIM(SPLIT_PART(RAW_DATA, '\t', 11), '"'), '') AS raw_serves_drinks,
-        NULLIF(TRIM(SPLIT_PART(RAW_DATA, '\t', 12), '"'), '') AS raw_serves_red_bull,
-        NULLIF(TRIM(SPLIT_PART(RAW_DATA, '\t', 13), '"'), '') AS raw_sugar_free_available,
-        NULLIF(TRIM(SPLIT_PART(RAW_DATA, '\t', 14), '"'), '') AS raw_organics_available,
-        NULLIF(TRIM(SPLIT_PART(RAW_DATA, '\t', 15), '"'), '') AS raw_editions_available,
-        NULLIF(TRIM(SPLIT_PART(RAW_DATA, '\t', 16), '"'), '') AS raw_ed,
-        NULLIF(TRIM(SPLIT_PART(RAW_DATA, '\t', 17), '"'), '') AS raw_ed_comp,
-        NULLIF(TRIM(SPLIT_PART(RAW_DATA, '\t', 18), '"'), '') AS raw_sd_coke,
-        NULLIF(TRIM(SPLIT_PART(RAW_DATA, '\t', 19), '"'), '') AS raw_sd,
-        NULLIF(TRIM(SPLIT_PART(RAW_DATA, '\t', 20), '"'), '') AS raw_leading_id_ext_link,
-        NULLIF(TRIM(SPLIT_PART(RAW_DATA, '\t', 21), '"'), '') AS raw_created_at,
+        FILE_ROW_NUMBER,
+        ID_OUTLET,
+        ID_PLATFORM,
+        PLATFORM_NAME,
+        ID_EXT_LINK,
+        PLACE_ID,
+        SIMILARITY_SCORE_NAME,
+        SIMILARITY_SCORE_ADDRESS,
+        MERGED_CHAIN_NAME,
+        IS_CHAIN,
+        NUM_RESTAURANTS,
+        SERVES_DRINKS,
+        SERVES_RED_BULL,
+        SUGAR_FREE_AVAILABLE,
+        ORGANICS_AVAILABLE,
+        EDITIONS_AVAILABLE,
+        ED,
+        ED_COMP,
+        SD_COKE,
+        SD,
+        LEADING_ID_EXT_LINK,
+        CREATED_AT,
         LOAD_TIMESTAMP
+    FROM {{ source('bronze_layer', 'MATCHING_PARSED') }}
+),
+
+raw_source AS (
+    SELECT
+        UPPER(TRIM(MARKET)) AS MARKET,
+        SOURCE_FILE,
+        FILE_ROW_NUMBER,
+        RAW_DATA AS raw_record
     FROM {{ source('bronze_layer', 'MATCHING_RAW') }}
 ),
 
 refined AS (
     SELECT
-        MARKET,
-        SOURCE_FILE,
-        -- IDs & Platform
-        TRY_TO_NUMBER(raw_id_outlet) AS id_outlet,
-        TRY_TO_NUMBER(raw_id_platform) AS id_platform,
-        LOWER(REGEXP_REPLACE(raw_platform_name, '[^a-zA-Z0-9]', '')) AS platform_name,
-        TRY_TO_NUMBER(raw_id_ext_link) AS id_ext_link,
-        raw_place_id AS place_id,
-        TRY_TO_DOUBLE(raw_similarity_score_name) AS similarity_score_name,
-        TRY_TO_DOUBLE(raw_similarity_score_address) AS similarity_score_address,
-        raw_merged_chain_name AS merged_chain_name,
-        -- Booleans
-        CASE WHEN raw_is_chain = '1' THEN TRUE ELSE FALSE END AS is_chain,
-        CASE WHEN raw_serves_drinks = '1' THEN TRUE ELSE FALSE END AS serves_drinks,
-        CASE WHEN raw_serves_red_bull = '1' THEN TRUE ELSE FALSE END AS serves_red_bull,
-        CASE WHEN raw_sugar_free_available = '1' THEN TRUE ELSE FALSE END AS sugar_free_available,
-        CASE WHEN raw_organics_available = '1' THEN TRUE ELSE FALSE END AS organics_available,
-        CASE WHEN raw_editions_available = '1' THEN TRUE ELSE FALSE END AS editions_available,
-        -- Integer Metrics & Flags
-        TRY_TO_NUMBER(raw_num_restaurants) AS num_restaurants,
-        TRY_TO_NUMBER(raw_ed) AS ed,
-        TRY_TO_NUMBER(raw_ed_comp) AS ed_comp,
-        TRY_TO_NUMBER(raw_sd_coke) AS sd_coke,
-        TRY_TO_NUMBER(raw_sd) AS sd,
-        TRY_TO_NUMBER(raw_leading_id_ext_link) AS leading_id_ext_link,
-        -- Timestamps
-        TRY_TO_TIMESTAMP(raw_created_at) AS created_at,
-        LOAD_TIMESTAMP
-    FROM extraction
+        p.MARKET,
+        p.SOURCE_FILE,
+        p.FILE_ROW_NUMBER,
+        TRY_TO_NUMBER(p.ID_OUTLET) AS id_outlet,
+        TRY_TO_NUMBER(p.ID_PLATFORM) AS id_platform,
+        LOWER(REGEXP_REPLACE(p.PLATFORM_NAME, '[^a-zA-Z0-9]', '')) AS platform_name,
+        TRY_TO_NUMBER(p.ID_EXT_LINK) AS id_ext_link,
+        p.PLACE_ID AS place_id,
+        TRY_TO_DOUBLE(p.SIMILARITY_SCORE_NAME) AS similarity_score_name,
+        TRY_TO_DOUBLE(p.SIMILARITY_SCORE_ADDRESS) AS similarity_score_address,
+        p.MERGED_CHAIN_NAME AS merged_chain_name,
+        CASE WHEN p.IS_CHAIN = '1' THEN TRUE ELSE FALSE END AS is_chain,
+        CASE WHEN p.SERVES_DRINKS = '1' THEN TRUE ELSE FALSE END AS serves_drinks,
+        CASE WHEN p.SERVES_RED_BULL = '1' THEN TRUE ELSE FALSE END AS serves_red_bull,
+        CASE WHEN p.SUGAR_FREE_AVAILABLE = '1' THEN TRUE ELSE FALSE END AS sugar_free_available,
+        CASE WHEN p.ORGANICS_AVAILABLE = '1' THEN TRUE ELSE FALSE END AS organics_available,
+        CASE WHEN p.EDITIONS_AVAILABLE = '1' THEN TRUE ELSE FALSE END AS editions_available,
+        TRY_TO_NUMBER(p.NUM_RESTAURANTS) AS num_restaurants,
+        TRY_TO_NUMBER(p.ED) AS ed,
+        TRY_TO_NUMBER(p.ED_COMP) AS ed_comp,
+        TRY_TO_NUMBER(p.SD_COKE) AS sd_coke,
+        TRY_TO_NUMBER(p.SD) AS sd,
+        TRY_TO_NUMBER(p.LEADING_ID_EXT_LINK) AS leading_id_ext_link,
+        TRY_TO_TIMESTAMP(p.CREATED_AT) AS created_at,
+        r.raw_record,
+        p.LOAD_TIMESTAMP
+    FROM parsed_source p
+    LEFT JOIN raw_source r
+        ON p.MARKET = r.MARKET
+       AND p.SOURCE_FILE = r.SOURCE_FILE
+       AND p.FILE_ROW_NUMBER = r.FILE_ROW_NUMBER
 )
 
 SELECT * FROM refined

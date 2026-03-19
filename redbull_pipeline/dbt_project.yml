@@ -31,7 +31,10 @@ clean-targets:         # directories to be removed by `dbt clean`
 # files using the `{{ config(...) }}` macro.
 models:
   redbull_pipeline:
-    +materialized: view    
-    silver: 
+    +materialized: view
+    silver:
+      +schema: SILVER
+      +materialized: view
+    intermediate:
       +schema: SILVER
       +materialized: view
