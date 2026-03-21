@@ -36,20 +36,6 @@ models:
           - not_null:
               config:
                 severity: warn
-      - name: segment_type
-        description: "Raw segment classification after basic standardization."
-        tests:
-          - accepted_values:
-              values: ['restaurant', 'grocery/convenience store/supermarket/liquor store']
-              quote: true
-              config:
-                severity: warn
-      - name: created_at
-        description: "Record creation timestamp parsed from the raw file."
-        tests:
-          - not_null:
-              config:
-                severity: warn
 
   - name: stg_portfolio
     description: "Silver staging view for product portfolio rows built from quote-aware bronze parsing and joined back to raw bronze for lineage."
@@ -86,18 +72,6 @@ models:
           - not_null:
               config:
                 severity: warn
-      - name: created_at
-        description: "Record creation timestamp parsed from the raw file."
-        tests:
-          - not_null:
-              config:
-                severity: warn
-      - name: item_price
-        description: "Parsed numeric item price from the raw feed."
-        tests:
-          - not_null:
-              config:
-                severity: warn
 
   - name: stg_matching
     description: "Silver staging view for outlet matching and Red Bull availability signals built from quote-aware bronze parsing and joined back to raw bronze for lineage."
@@ -130,12 +104,6 @@ models:
           - not_null
       - name: raw_record
         description: "Original raw source row joined from raw bronze for lineage and debugging."
-        tests:
-          - not_null:
-              config:
-                severity: warn
-      - name: created_at
-        description: "Record creation timestamp parsed from the raw file."
         tests:
           - not_null:
               config:

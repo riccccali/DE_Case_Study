@@ -1,0 +1,113 @@
+version: 2
+
+models:
+  - name: dim_market
+    description: "Market dimension for the three in-scope countries."
+    columns:
+      - name: market_key
+        tests:
+          - not_null
+          - unique
+      - name: market
+        tests:
+          - not_null
+          - unique
+
+  - name: dim_platform
+    description: "Platform dimension by market and platform identifier."
+    columns:
+      - name: platform_key
+        tests:
+          - not_null
+          - unique
+      - name: market_key
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_market')
+                field: market_key
+      - name: id_platform
+        tests:
+          - not_null
+
+  - name: dim_outlet
+    description: "Outlet-platform dimension enriched with matching signals."
+    columns:
+      - name: outlet_key
+        tests:
+          - not_null
+          - unique
+      - name: market_key
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_market')
+                field: market_key
+      - name: platform_key
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_platform')
+                field: platform_key
+      - name: id_outlet
+        tests:
+          - not_null
+      - name: id_ext_link
+        tests:
+          - not_null
+      - name: id_platform
+        tests:
+          - not_null
+
+  - name: dim_product
+    description: "Product dimension deduplicated at beverage level within market."
+    columns:
+      - name: product_key
+        tests:
+          - not_null
+          - unique
+      - name: market_key
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_market')
+                field: market_key
+      - name: id_beverage
+        tests:
+          - not_null
+
+  - name: fct_outlet_product_listing
+    description: "Fact table at outlet-product listing grain for analytics and data science use cases."
+    columns:
+      - name: listing_key
+        tests:
+          - not_null
+          - unique
+      - name: market_key
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_market')
+                field: market_key
+      - name: outlet_key
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_outlet')
+                field: outlet_key
+      - name: product_key
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_product')
+                field: product_key
+      - name: item_price
+        tests:
+          - not_null

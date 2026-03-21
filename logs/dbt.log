@@ -111,3 +111,18 @@ https://docs.getdbt.com/docs/configure-your-profile
 [0m11:12:28.784837 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001EC040D1350>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001EC03D8EF90>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001EC03D406B0>]}
 [0m11:12:28.785267 [debug] [MainThread]: Flushing usage events
 [0m11:12:29.465666 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m15:57:43.778670 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000018FD8850EC0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000018FDA987ED0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000018FDA9879D0>]}
+
+
+============================== 15:57:43.784997 | 00261ad2-d457-445b-8e5d-4cf18dcbb938 ==============================
+[0m15:57:43.784997 [info ] [MainThread]: Running with dbt=1.11.7
+[0m15:57:43.785702 [debug] [MainThread]: running dbt with arguments {'static_parser': 'True', 'no_print': 'None', 'version_check': 'True', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'target_path': 'None', 'printer_width': '80', 'write_json': 'True', 'introspect': 'True', 'log_cache_events': 'False', 'empty': 'False', 'cache_selected_only': 'False', 'fail_fast': 'False', 'debug': 'False', 'log_format': 'default', 'profiles_dir': 'C:\\Users\\ricca\\.dbt', 'send_anonymous_usage_stats': 'True', 'quiet': 'False', 'warn_error': 'None', 'partial_parse': 'True', 'use_colors': 'True', 'indirect_selection': 'eager', 'invocation_command': 'dbt build --select intermediate', 'use_experimental_parser': 'False', 'log_path': 'logs'}
+[0m15:57:43.786278 [error] [MainThread]: Encountered an error:
+Runtime Error
+  No dbt_project.yml found at expected path C:\Users\ricca\CodeRepos\Redbull\dbt_project.yml
+  Verify that each entry within packages.yml (and their transitive dependencies) contains a file named dbt_project.yml
+  
+[0m15:57:43.787424 [debug] [MainThread]: Command `dbt build` failed at 15:57:43.787285 after 0.14 seconds
+[0m15:57:43.787801 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000018FDA995E00>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000018FDA9B9B50>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x0000018FD97FBDF0>]}
+[0m15:57:43.788191 [debug] [MainThread]: Flushing usage events
+[0m15:57:44.600626 [debug] [MainThread]: An error was encountered while trying to flush usage events
