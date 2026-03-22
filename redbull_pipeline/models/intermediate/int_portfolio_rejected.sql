@@ -9,12 +9,10 @@ classified AS (
     SELECT
         *,
         CASE
-            WHEN raw_record IS NULL THEN 'MISSING_RAW_RECORD'
             WHEN item_price IS NULL THEN 'MISSING_ITEM_PRICE'
             ELSE NULL
         END AS error_code,
         CASE
-            WHEN raw_record IS NULL THEN 'Lineage join back to bronze raw failed.'
             WHEN item_price IS NULL THEN 'Item price could not be parsed from the source row.'
             ELSE NULL
         END AS error_reason

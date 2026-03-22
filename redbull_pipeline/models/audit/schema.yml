@@ -1,0 +1,16 @@
+version: 2
+
+models:
+  - name: source_coverage_audit
+    description: "Audit view showing expected source-by-market coverage and whether each combination is present."
+    columns:
+      - name: source_name
+        description: "Logical source name being audited."
+      - name: market
+        description: "Expected market in scope for the source."
+      - name: row_count
+        description: "Observed row count for the source and market."
+      - name: source_file_count
+        description: "Observed distinct source file count for the source and market."
+      - name: coverage_status
+        description: "Coverage result for the source and market combination."

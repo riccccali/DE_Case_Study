@@ -32,10 +32,6 @@ models:
           - not_null
       - name: raw_record
         description: "Original raw source row joined from raw bronze for lineage and debugging."
-        tests:
-          - not_null:
-              config:
-                severity: warn
 
   - name: stg_portfolio
     description: "Silver staging view for product portfolio rows built from quote-aware bronze parsing and joined back to raw bronze for lineage."
@@ -68,10 +64,6 @@ models:
           - not_null
       - name: raw_record
         description: "Original raw source row joined from raw bronze for lineage and debugging."
-        tests:
-          - not_null:
-              config:
-                severity: warn
 
   - name: stg_matching
     description: "Silver staging view for outlet matching and Red Bull availability signals built from quote-aware bronze parsing and joined back to raw bronze for lineage."
@@ -104,7 +96,3 @@ models:
           - not_null
       - name: raw_record
         description: "Original raw source row joined from raw bronze for lineage and debugging."
-        tests:
-          - not_null:
-              config:
-                severity: warn

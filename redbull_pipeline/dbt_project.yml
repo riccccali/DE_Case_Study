@@ -38,6 +38,9 @@ models:
     intermediate:
       +schema: SILVER
       +materialized: view
+    audit:
+      +schema: AUDIT
+      +materialized: view
     gold:
       +schema: GOLD
       +materialized: view

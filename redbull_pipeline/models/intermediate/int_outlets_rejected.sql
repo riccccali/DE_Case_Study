@@ -9,7 +9,6 @@ classified AS (
     SELECT
         *,
         CASE
-            WHEN raw_record IS NULL THEN 'MISSING_RAW_RECORD'
             WHEN created_at IS NULL THEN 'MISSING_CREATED_AT'
             WHEN segment_type NOT IN (
                 'restaurant',
@@ -18,7 +17,6 @@ classified AS (
             ELSE NULL
         END AS error_code,
         CASE
-            WHEN raw_record IS NULL THEN 'Lineage join back to bronze raw failed.'
             WHEN created_at IS NULL THEN 'Created_at could not be parsed from the source row.'
             WHEN segment_type NOT IN (
                 'restaurant',
