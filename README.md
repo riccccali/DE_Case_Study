@@ -182,21 +182,13 @@ The project handles data quality in stages:
 
 ### 3.2 Issues identified and current handling
 
-- Missing `created_at` in outlet data
+- Missing `created_at` in outlet & portfolio data
   - Current handling: rejected into `int_outlets_rejected`
-  - Rationale: outlet timestamps were treated as important enough to keep the valid outlet set cleaner
+  - Rationale: outlet timestamps were treated as important enough to keep the valid outlet set cleaner. Missing created at usually points to data row parsing error.
 
 - Missing `item_price` in portfolio data
   - Current handling: rejected into `int_portfolio_rejected`
   - Rationale: the gold fact currently depends on price being present
-
-- Missing `created_at` in portfolio data
-  - Current handling: tolerated and kept in `int_portfolio_valid`
-  - Rationale: removing these rows would discard a large number of otherwise useful listing rows
-
-- Invalid or unexpected `segment_type` values in outlet data
-  - Current handling: rejected into `int_outlets_rejected`
-  - Rationale: this field is exposed as a business-facing descriptive attribute
 
 - Quoted tabs and delimiter issues in source files
   - Current handling: quote-aware parsed bronze tables are used as the authoritative downstream source
@@ -205,10 +197,6 @@ The project handles data quality in stages:
 - Identifier type inconsistency across tables
   - Current handling: identifier columns such as `id_outlet`, `id_platform`, and `id_ext_link` are kept as strings across downstream models
   - Rationale: these are identifiers, not measures, and numeric coercion caused join/runtime issues
-
-- Overly strict matching enrichment join logic
-  - Current handling: matching enrichment in `dim_outlet` is joined at outlet level rather than outlet-platform level
-  - Rationale: the external matching feed behaves as outlet-level enrichment
 
 - Portfolio rows that do not map to an outlet dimension record
   - Current handling: excluded from the gold fact by requiring a non-null `outlet_key`
@@ -255,30 +243,37 @@ Potential next iterations:
 
 ## 4. Operational Considerations
 
-### 4.1 Orchestration
+### 4.1 Orchestration and CI/CD
 
-This project separates ingestion from transformation orchestration:
+This project separates runtime orchestration from release validation, but treats them as part of one operating model.
 
-- Snowpipe handles file ingestion into Snowflake bronze tables
-- dbt handles transformations from bronze to silver, intermediate, and gold
-
-In practice:
+Runtime flow:
 1. files arrive in cloud storage
 2. Snowpipe ingests them into bronze raw and parsed tables
-3. a scheduled transformation job runs dbt through silver, intermediate, and gold
+3. a scheduled dbt job runs transformations through silver, intermediate, and gold
 4. dbt tests run as part of `dbt build`
-5. rejected rows remain visible
+5. rejected rows remain visible for review
 6. gold becomes the analytics-facing layer
 
-Two practical orchestration options for the dbt step are:
+CI objective:
+- validate SQL, model dependencies, and dbt tests before release
+- surface failures, warnings, rejected-row counts, and source coverage issues before promoting changes
+
+CD objective:
+- deploy the dbt project into the target environment
+- run the transformation pipeline in that environment
+- reapply governance objects that may be affected by rebuilt views, especially RBAC and row access policies
+- run a short smoke test on the gold layer and analyst roles
+
+Practical implementation options:
 
 - `dbt Cloud job`
-  - Pros: simplest setup for dbt runs, built-in scheduling, dbt-native observability
-  - Cons: extra platform dependency and less warehouse-native architecture
+  - Pros: simplest managed approach for scheduling, environment handling, run history, and dbt-native observability.
+  - Cons: adds an external platform dependency and is less warehouse-native.
 
 - `Snowflake Tasks`
-  - Pros: keeps orchestration close to Snowflake and fits a Snowflake-centric design
-  - Cons: more custom setup and less convenient dbt-specific run management than dbt Cloud
+  - Pros: keeps runtime orchestration close to Snowflake and fits a Snowflake-centric operating model.
+  - Cons: requires more custom deployment and operational logic than dbt Cloud.
 
 ### 4.2 Reprocessing and backfills
 
